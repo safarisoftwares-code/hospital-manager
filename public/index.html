@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System v5.0</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+</head>
+<body>
+
+<div id="loginScreen" class="login-container">
+    <div class="logo">🏥</div>
+    <h2>Hospital Management System</h2>
+    <p style="color:#888;margin-bottom:20px;font-size:13px">Enterprise v5.0 — 22 Modules | Python Edition</p>
+    <form id="loginForm">
+        <div class="form-group"><label>Username</label><input type="text" id="loginUsername" placeholder="Enter username" required autocomplete="off"></div>
+        <div class="form-group"><label>Password</label>
+            <div style="position:relative">
+                <input type="password" id="loginPassword" placeholder="Enter password" required style="padding-right:40px">
+                <span onclick="togglePassword('loginPassword', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:20px;user-select:none">👁️</span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">🔐 Login</button>
+    </form>
+    <p style="margin-top:15px;color:#aaa;font-size:10px;text-align:center">Registration | Triage | Consultation | Lab | Radiology | Pharmacy | Ward | Dietary | Blood Bank | Social Work | Physiotherapy | Isolation | Medical Records | Cashier | Referral | SHA | Morgue | Store | Manager | Emergency | Pediatrics</p>
+</div>
+
+<div id="appScreen" style="display:none">
+    <div class="header">
+        <div><h1>🏥 HMS Enterprise v5.0</h1><small id="headerDept" style="opacity:0.85;font-size:10px"></small></div>
+        <div style="display:flex;align-items:center;gap:10px"><span class="dept-badge" id="headerRole"></span><button class="logout-btn" onclick="logout()">🚪 Logout</button></div>
+    </div>
+    <div class="dashboard" id="dashboardContent"></div>
+</div>
+
+<div id="patientModal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="modalTitle">Details</h3><span class="close-btn" onclick="closeModal()">&times;</span></div><div id="modalBody"></div></div></div>
+<div id="legalModal" class="legal-modal"><div class="legal-content"><div class="modal-header"><h2 id="legalTitle">Legal</h2><span class="close-btn" onclick="closeLegalModal()">&times;</span></div><div id="legalBody"></div></div></div>
+<div id="toastContainer"></div>
+
+<footer class="app-footer" id="appFooter">
+    <div class="footer-grid">
+        <div class="footer-section"><h4>About</h4><p>Hospital Management System Enterprise v5.0 — 22 integrated modules. Python/Flask/SQLite. Offline LAN. No internet required.</p></div>
+        <div class="footer-section"><h4>Modules</h4><p>Registration • Triage • Consultation • Lab • Radiology • Pharmacy • Ward • Dietary • Blood Bank • Social Work • Physiotherapy • Isolation • Medical Records • Cashier • Referral • SHA • Morgue • Store • Manager • Emergency • Pediatrics</p></div>
+        <div class="footer-section"><h4>Legal</h4><ul style="list-style:none;padding:0"><li><a onclick="showLegal('terms')">📄 Terms of Use</a></li><li><a onclick="showLegal('privacy')">🔒 Privacy Policy</a></li><li><a onclick="showLegal('disclaimer')">⚠️ Disclaimer</a></li></ul></div>
+        <div class="footer-section"><h4>Contact</h4><p><strong>Developer:</strong> Safari Softwares</p><p><strong>Email:</strong> safarisoftwares@gmail.com</p><p>🔐 SSL Encrypted | 🔐 Offline LAN</p></div>
+    </div>
+    <div class="footer-bottom"><p><strong>Copyright &copy; 2026 Safari Softwares. All Rights Reserved.</strong> | safarisoftwares@gmail.com</p></div>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

@@ -1990,7 +1990,23 @@ def download_database():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
-    # ============================================================================
+# ============================================================================
+# CLEAR TEST DATA
+# ============================================================================
+
+@app.route('/api/wipe-test-data', methods=['POST'])
+def wipe_test_data():
+    try:
+        tables = ['billing_items','visit_history','ward_rounds','prescriptions','appointments','expenses','maternity_records','dental_records','eye_records','visits','patients']
+        for t in tables:
+            try: query('DELETE FROM ' + t)
+            except: pass
+        query("UPDATE beds SET is_occupied=0, current_visit_id=NULL, status='available'")
+        return jsonify({'success':True,'message':'All test data cleared.'})
+    except Exception as e:
+        return jsonify({'success':False,'error':str(e)}), 500
+    
+# ============================================================================
 # SERVE FRONTEND APPLICATION
 # ============================================================================
 

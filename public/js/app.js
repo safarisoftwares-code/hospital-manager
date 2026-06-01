@@ -1976,7 +1976,8 @@ async function adminScreen() {
     h += '<div class="card"><div class="card-header" style="cursor:pointer" onclick="toggleAdminSection(\'adminBackup\')">💾 Backup & Restore <span id="adminBackup_icon" style="float:right">▼</span></div>';
     h += '<div id="adminBackup" class="card-body">';
     h += '<button class="btn btn-success" onclick="window.open(API+\'/api/export/csv\')">📥 Export CSV</button> ';
-    h += '<button class="btn btn-info" onclick="window.open(API+\'/api/backup/download\')">🗄️ Download Database</button>';
+    h += '<button class="btn btn-info" onclick="window.open(API+\'/api/backup/download\')" style="margin-left:4px">🗄️ Download Database</button> ';
+    h += '<button class="btn btn-danger" onclick="clearAllTestData()" style="margin-left:4px">🗑️ Clear Test Data</button>';
     h += '<p style="font-size:11px;color:var(--text-muted);margin-top:8px">Database: hospital.db in project folder</p></div></div>';
     
         h += '<div class="card"><div class="card-header" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleAdminSection(\'adminUsers\')"><span>👥 Users (' + users.length + ') <button class="btn btn-success btn-small" style="margin-left:8px" onclick="event.stopPropagation();showAddUserForm()">➕ Add User</button></span><span id="adminUsers_icon">▼</span></div>';
@@ -2177,6 +2178,17 @@ function attachEvents() {
         btn.textContent='✅ Register & Create Visit'; btn.disabled=false; window.regLock=false; }); }
     var af = document.getElementById('addItemForm');
     if (af) { af.addEventListener('submit', async function(e) { e.preventDefault(); await fetch(API+'/api/inventory',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({item_name:document.getElementById('siname').value,category:document.getElementById('sicat')?document.getElementById('sicat').value:'General',department:document.getElementById('sidept')?document.getElementById('sidept').value:'general',current_stock:parseInt(document.getElementById('siqty').value)||0,minimum_stock:parseInt(document.getElementById('simin').value)||10,unit:document.getElementById('siunit')?document.getElementById('siunit').value:'',unit_price:parseFloat(document.getElementById('siprice').value)||0})}); toast('✅ Item added','success'); e.target.reset(); loadDashboard(); }); }
+}
+
+async function clearAllTestData() {
+    if (!confirm('⚠️ WARNING: This will DELETE all patients, visits, bills, appointments, and test data. User accounts and settings will be preserved. This CANNOT be undone.')) return;
+    if (!confirm('FINAL WARNING: Are you sure?')) return;
+    try {
+        var res = await fetch(API + '/api/wipe-test-data', { method: 'POST' });
+        var data = await res.json();
+        if (data.success) { toast('✅ All test data cleared', 'success'); loadDashboard(); }
+        else { toast('Error: ' + data.error, 'error'); }
+    } catch (err) { toast('Error clearing data', 'error'); }
 }
 
 // ============ LEGAL ============

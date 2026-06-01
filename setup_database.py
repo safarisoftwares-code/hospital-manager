@@ -292,6 +292,15 @@ def setup_database():
                 created_at TEXT DEFAULT (datetime('now','localtime'))
             )
         ''')
+
+        CREATE TABLE IF NOT EXISTS expenses (
+    expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    description TEXT NOT NULL,
+    category TEXT DEFAULT 'General',
+    amount REAL NOT NULL,
+    recorded_by INTEGER REFERENCES users(user_id),
+    created_at TEXT DEFAULT (datetime('now','localtime'))
+);
         
         conn.commit()
         print("      All tables created.")
